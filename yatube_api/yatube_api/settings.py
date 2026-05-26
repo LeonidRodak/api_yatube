@@ -23,10 +23,10 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "posts.apps.PostsConfig",
-    "rest_framework",  # ← добавь
-    "api",  # ← добавь
-    "rest_framework.authtoken",  # ← добавь эту строку
+    "posts.apps.PostsConfig",  # приложение с моделями Yatube
+    "rest_framework",  # Django REST Framework — главное для API
+    "api",  # приложение, где лежит весь API
+    "rest_framework.authtoken",  # приложение для работы с токенами авторизации
 ]
 
 MIDDLEWARE = [
@@ -39,6 +39,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# Указываем, где лежит главный файл с маршрутами (urls.py) проекта.
 ROOT_URLCONF = "yatube_api.urls"
 TEMPLATES_DIR = BASE_DIR / "templates"
 TEMPLATES = [
@@ -104,10 +105,14 @@ USE_TZ = True
 
 STATIC_URL = "/static/"
 
+
+# Настройка DRF (Django REST Framework)
 REST_FRAMEWORK = {
+    # По умолчанию используем Token Authentication
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.TokenAuthentication",
     ],
+    # По умолчанию все эндпоинты доступны только авторизованным пользователям
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
